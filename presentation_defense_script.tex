@@ -1,0 +1,265 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[margin=1in]{geometry}
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+\usepackage{amsmath}
+
+% Color definitions matching academic presentation theme
+\definecolor{primaryblue}{RGB}{30, 58, 138}   % Deep Navy Blue
+\definecolor{secondaryblue}{RGB}{37, 99, 235} % Accent Blue
+\definecolor{darkslate}{RGB}{30, 41, 59}      % Slate Text
+\definecolor{lightgray}{RGB}{241, 245, 249}    % Card Background
+\definecolor{bordergray}{RGB}{203, 213, 225}   % Border Gray
+\definecolor{greencolor}{RGB}{46, 125, 50}     % Completed Green
+\definecolor{ambercolor}{RGB}{180, 100, 0}     % Ongoing Amber
+\definecolor{redcolor}{RGB}{185, 28, 28}       % Risk / Red
+
+% Section styling
+\titleformat{\section}{\large\bfseries\color{primaryblue}}{\thesection}{1em}{}[\titlerule]
+\titleformat{\subsection}{\normalsize\bfseries\color{secondaryblue}}{\thesubsection}{1em}{}
+
+% Header and Footer setup
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textsf{\color{darkslate}TKM College of Engineering, Kollam --- Department of EEE}}
+\fancyhead[R]{\small\textsf{\color{darkslate}First Project Review (2026--27)}}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+% Callout Box for Spoken Script
+\newtcolorbox{scriptbox}[1][]{
+    colback=lightgray,
+    colframe=secondaryblue,
+    coltitle=white,
+    fonttitle=\bfseries\small,
+    title=#1,
+    boxrule=1pt,
+    arc=3pt,
+    left=8pt,
+    right=8pt,
+    top=8pt,
+    bottom=8pt
+}
+
+% Highlight Card for Defense Q&A
+\newtcolorbox{qnabox}[1][]{
+    colback=white,
+    colframe=bordergray,
+    coltitle=primaryblue,
+    fonttitle=\bfseries\small,
+    title=#1,
+    boxrule=0.8pt,
+    arc=2pt,
+    left=8pt,
+    right=8pt,
+    top=6pt,
+    bottom=6pt
+}
+
+\begin{document}
+
+% Title Block
+\begin{center}
+    {\LARGE\bfseries\color{primaryblue} Final Project Review Presentation Script}\\[4pt]
+    {\large\bfseries\color{secondaryblue} \& Electrical Engineering Defense Dossier}\\[6pt]
+    {\normalsize\textbf{Energy Demand Forecasting of Smart Grid Using Deep Learning}}\\[8pt]
+    \textsf{\small Course: 23EER705 Research Based Mini Project / Capstone \quad|\quad Group: ER27A15}\\[2pt]
+    \textsf{\small Department of Electrical \& Electronics Engineering, TKM College of Engineering, Kollam}\\[4pt]
+    \textsf{\footnotesize \textbf{Team Members:} Vaishnav Venugopal, Ajindev P, Dhiya T P, Karthika S}\\[1pt]
+    \textsf{\footnotesize \textbf{Supervisors:} Dr.~Anantha Padmanabhan N K (Guide), Prof.~Amina Shahjahan (Co-Guide)}
+\end{center}
+\vspace{0.3cm}
+\hrule height 1.2pt
+\vspace{0.4cm}
+
+\section{Presentation Roadmap \& Timing Guidelines}
+
+The First Review presentation allocates approximately 10 to 12 minutes for delivery, followed by 5 minutes of technical viva by the evaluation panel. Slides 14 through 20 represent the technical core and execution summary of the project.
+
+\begin{table}[h!]
+\centering
+\small
+\begin{tabularx}{\textwidth}{lXlc}
+\toprule
+\textbf{Slide \#} & \textbf{Slide Title \& Header Number} & \textbf{Core Presentation Focus} & \textbf{Target Duration} \\
+\midrule
+Slide 14 & Simulation / Modelling Results (13 / 20) & Parquet compression, outlier capping, Min-Max & 60--75 sec \\
+Slide 15 & Results, Analysis \& Validation (14 / 20) & Data quality, feature readiness, Phase-I status & 60--75 sec \\
+Slide 16 & OBE, SDG \& Traceability (15 / 20) & Mapping to UN SDG 7, CO1, CO4 \& SPI-TP-01 & 45--50 sec \\
+Slide 17 & Publication \& Deliverable Plan (16 / 20) & IEEE Conference paper, software copyright & 40--45 sec \\
+Slide 18 & Challenges, Risks \& Mitigations (17 / 20) & Data variance, computational load, guide input & 45--50 sec \\
+Slide 19 & Plan Before Next Review (18 / 20) & Execution of WP3, WP4, WP5 (Model training) & 45--50 sec \\
+Slide 20 & Conclusion / Review Summary (19 / 20) & 60-second executive recap \& Phase-II targets & 50--60 sec \\
+Slide 21--22 & References \& Thank You / Q\&A & Literature grounding \& opening for panel inquiry & Transition \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Word-for-Word Presentation Script (Slides 14--22)}
+
+\subsection{Slide 14: Simulation / Modelling / Development Results (13 / 20)}
+\textit{Visual Cue: Two-panel figure on left (storage compression + signal normalization), Result Details table on right.}
+
+\begin{scriptbox}[Presenter Speaking Script --- Slide 14]
+``Respected evaluators, moving on to Slide 14, we present the strongest actual technical and engineering result achieved during this First Review phase, traced under Work Packages 2 and 3 with Evidence Codes E2 and E3.
+
+\textbf{[Point to Left Chart --- Panel A]} One of the primary engineering bottlenecks in smart grid data analytics is managing ultra-high-frequency data streams without overwhelming physical memory. Our raw smart meter dataset contains over 322 million interval readings, expanding to over 37 gigabytes uncompressed. To enable efficient, high-throughput model training, we designed an automated, chunked binary ingestion pipeline utilizing Apache Arrow Parquet with Snappy compression. As demonstrated in Panel A, this achieved an 8.8-fold storage reduction---reducing disk consumption from 37.2 gigabytes to just 4.1 gigabytes---while accelerating disk input/output read throughput by more than ten times.
+
+\textbf{[Point to Left Chart --- Panel B]} In terms of signal conditioning, shown in Panel B, raw smart meter series exhibit significant sensor noise, communication dropouts, and erroneous negative readings. We implemented an automated zero-loss preprocessing pipeline: negative meter errors are clipped to zero, and extreme appliance inrush spikes are bounded at the 99.9th percentile threshold (2.929 kilowatt-hours) to prevent gradient explosion during backpropagation. Min-max normalization then scales the load into a strictly bounded $[0, 1]$ interval, matching the activation characteristics of deep neural networks.
+
+As tabulated on the right, all 322 million readings have achieved continuous temporal alignment, over 20 temporal and cyclical features have been engineered, and our data pipeline is verified under Evidence Codes E2 and E3.''
+\end{scriptbox}
+
+\subsection{Slide 15: Results, Analysis \& Preliminary Validation (14 / 20)}
+\textit{Visual Cue: Four-row benchmarking table followed by Verified Now and Still to Validate summary boxes.}
+
+\begin{scriptbox}[Presenter Speaking Script --- Slide 15]
+``On Slide 15, we present the preliminary validation and gap analysis against our approved project objectives.
+
+First, regarding \textbf{Data Quality}: Against an unconditioned baseline of noisy CSV files with missing intervals and DST duplicates, our target was to construct a continuous, clean time-series tensor. As shown, our data preprocessing is 100\% complete, ensuring complete dataset integrity.
+
+Second, for \textbf{Feature Readiness}: Beyond raw scalar demand, our target was to supply the neural network with multi-scale temporal context. We have extracted over 20 features, including continuous sine and cosine cyclical encodings for daily and annual periodicity, calendar flags, and historical lag windows.
+
+Regarding \textbf{Forecasting Accuracy and Model Generalization}: As established in our approved timeline, these metrics are marked as `Not yet evaluated' because model training on the hybrid neural architecture constitutes Phase II under Work Package 4. Our target benchmark is to achieve a Mean Absolute Percentage Error (MAPE) under 4\%, outperforming traditional ARIMA and standalone recurrent baselines across diverse distribution feeders.
+
+In summary: What is \textbf{Verified Now} is the complete data ingestion, outlier capping, and feature preparation pipeline. What remains \textbf{Still to Validate} is deep learning convergence, hyperparameter optimization, and multi-dataset testing.''
+\end{scriptbox}
+
+\subsection{Slide 16: OBE, SDG \& Sustainability Traceability (15 / 20)}
+\textit{Visual Cue: Accreditation traceability matrix linking Objectives, COs, SDGs, and SPI Codes.}
+
+\begin{scriptbox}[Presenter Speaking Script --- Slide 16]
+``Slide 16 details the traceability of our project to Outcome-Based Education (OBE) and United Nations Sustainable Development Goals.
+
+Our work directly supports \textbf{UN SDG 7: Affordable and Clean Energy}. In modern electrical grids, demand forecasting inaccuracies force power system operators to commit expensive, fossil-fueled spinning reserves to hedge against unexpected demand spikes. By delivering high-accuracy short-term load forecasting, our proposed model minimizes spinning reserve margins, lowers operational generation costs, and facilitates the smooth integration of intermittent renewable energy sources into the smart grid.
+
+From an academic perspective, Objectives 1 and 2 satisfy \textbf{Course Outcome CO1} through the application of electrical power systems knowledge and data engineering techniques. Objectives 3 and 4 map to \textbf{Course Outcome CO4}, conducting formal investigation of complex engineering problems through comparative evaluation using standardized metrics under Student Performance Indicator SPI-TP-01. As shown, Evidence E1 and E5 are completed, with E7 and E8 planned for Phase II.''
+\end{scriptbox}
+
+\subsection{Slide 17: Publication, IPR \& Technology Deliverable Plan (16 / 20)}
+\textit{Visual Cue: Deliverable matrix with primary checkbox ticked at Conference Paper.}
+
+\begin{scriptbox}[Presenter Speaking Script --- Slide 17]
+``Slide 17 summarizes our publication and intellectual property roadmap.
+
+Our \textbf{Primary Target Deliverable} is an original, peer-reviewed \textbf{Conference Paper} submitted to an IEEE or Scopus-indexed conference, such as the IEEE Power \& Energy Society (PES) General Meeting or an IEEE International Conference on Power and Energy Systems.
+
+The specific publishable contribution will be the architectural formulation of our hybrid deep learning model and its validated performance improvements over conventional benchmarks across both residential smart meter (SGSC) and bulk transmission (PJM) datasets.
+
+Our immediate action is completing model training to finalize comparative accuracy tables. In addition, software documentation for our automated preprocessing codebase will be archived for potential software copyright registration.''
+\end{scriptbox}
+
+\subsection{Slide 18: Challenges, Risks \& Corrective Actions (17 / 20)}
+\textit{Visual Cue: Risk matrix identifying four key technical challenges and engineering mitigations.}
+
+\begin{scriptbox}[Presenter Speaking Script --- Slide 18]
+``On Slide 18, we identify the key technical risks encountered and our proactive engineering mitigations:
+
+1. \textbf{Dataset Variability}: Load dynamics differ substantially between low-voltage residential consumers and high-voltage regional grids. To prevent model divergence, we implemented standardized min-max scaling and uniform sliding-window tensor shapes.
+2. \textbf{Hybrid Architecture Complexity}: Coupling multiple recurrent or attention layers can introduce training instability. We mitigated this by benchmarking proven architectures from recent IEEE Transactions.
+3. \textbf{Computational Overhead}: Unfolding recurrent neural networks across 322 million intervals demands immense memory. We addressed this through chunked data generators and columnar Parquet streaming.
+4. \textbf{Multi-Dataset Generalization}: To ensure our model is not overfitted to a single geography, our evaluation protocol spans the Australian SGSC dataset and American PJM regional grids.
+
+We have designated periodic technical input from our project guides as our primary support mechanism.''
+\end{scriptbox}
+
+\subsection{Slide 19: Plan Before Next Review (18 / 20)}
+\textit{Visual Cue: Roadmap table detailing Work Packages 3, 4, and 5.}
+
+\begin{scriptbox}[Presenter Speaking Script --- Slide 19]
+``Slide 19 provides our execution schedule leading to the Second Project Review. Our next major milestone is to present a \textbf{fully trained and evaluated hybrid deep learning model}.
+
+Our team will execute three sequential tasks:
+\begin{itemize}[leftmargin=15pt,itemsep=2pt]
+    \item Under \textbf{Work Package 3}, we will finalize the PyTorch codebase for the hybrid architecture (Evidence E5).
+    \item Under \textbf{Work Package 4}, we will execute full model training, hyperparameter optimization, and compute our evaluation metrics---MAE, RMSE, and MAPE---on hold-out test sets (Evidence E5 and E7).
+    \item Under \textbf{Work Package 5}, we will conduct comparative benchmarking against standard baseline architectures, including ARIMA, standalone LSTM, and GRU networks (Evidence E8).
+\end{itemize}
+These experimental results will form the core of our interim project report and draft conference manuscript.''
+\end{scriptbox}
+
+\subsection{Slide 20: Conclusion / Review Summary (19 / 20)}
+\textit{Visual Cue: Summary card recapping Problem, Contribution, Achievements, and Next Steps.}
+
+\begin{scriptbox}[Presenter Speaking Script --- Slide 20]
+``To conclude our First Project Review on Slide 20:
+\begin{itemize}[leftmargin=15pt,itemsep=2pt]
+    \item \textbf{Engineering Problem}: The non-linearity and volatility of smart grid demand make accurate forecasting difficult, leading to grid operational inefficiencies.
+    \item \textbf{Proposed Contribution}: A robust hybrid deep learning forecasting framework engineered for volatile time-series load data.
+    \item \textbf{Major Work Completed}: Comprehensive literature review, multi-source dataset collection, end-to-end data preprocessing, and multi-scale cyclical feature extraction.
+    \item \textbf{Most Significant Result}: Successful validation and 8.8-times Parquet compression of 322 million smart meter readings with zero data loss.
+    \item \textbf{Immediate Next Target}: Commence deep learning model training and establish comparative benchmark metrics against baseline architectures.''
+\end{itemize}
+\end{scriptbox}
+
+\subsection{Slides 21 \& 22: References and Thank You / Q\&A}
+\begin{scriptbox}[Presenter Speaking Script --- Closing]
+``\textbf{[Advance to Slide 21]} Our methodology is grounded in recent IEEE Transactions on Smart Grid, IEEE Access, and IEEE Open Journal literature published between 2022 and 2026.
+
+\textbf{[Advance to Slide 22]} Thank you, respected members of the evaluation panel, for your time and guidance. We now welcome your questions and feedback.''
+\end{scriptbox}
+
+\newpage
+\section{Electrical Engineering Defense Dossier (Viva Q\&A)}
+
+\begin{qnabox}[Q1: Why do electrical power utilities need Short-Term Load Forecasting (STLF)?]
+\textbf{Answer:} Primarily for \textbf{Unit Commitment} and \textbf{Economic Load Dispatch}. Thermal generating stations require 4 to 8 hours to ramp up from cold start. Day-ahead load forecasting allows the system operator to commit the optimal combination of generating units to meet expected demand at minimum operating cost while satisfying spinning reserve requirements.
+\end{qnabox}
+
+\begin{qnabox}[Q2: What is the physical consequence of Under-Forecasting vs. Over-Forecasting on the power grid?]
+\textbf{Answer:} 
+\begin{itemize}[leftmargin=12pt,itemsep=1pt]
+    \item \textbf{Under-Forecasting (Threat to Stability):} Generated power is less than demand ($P_G < P_D$). The deficiency draws kinetic energy from generator rotors, causing system frequency to drop below $50\text{ Hz}$. This risks tripping under-frequency relays, causing localized load shedding or cascading blackouts. Emergency peaker plants must be dispatched at high expense.
+    \item \textbf{Over-Forecasting (Economic Penalty):} Generated power exceeds demand ($P_G > P_D$). System frequency rises, forcing thermal generators to operate throttled back at poor thermal heat rates, leading to fuel wastage and high operating expenses.
+\end{itemize}
+\end{qnabox}
+
+\begin{qnabox}[Q3: What forecasting horizon does this project target?]
+\textbf{Answer:} \textbf{Short-Term Load Forecasting (STLF)}, spanning 30-minute intervals up to 24--48 hours ahead (day-ahead scheduling). In contrast, Very Short-Term (seconds to minutes) is used for AGC/frequency control; Medium-Term (weeks) for maintenance scheduling; and Long-Term (years) for transmission expansion planning.
+\end{qnabox}
+
+\begin{qnabox}[Q4: Are you forecasting Active Power (kW/MW) or Energy (kWh)?]
+\textbf{Answer:} In the \textbf{SGSC smart meter dataset}, we forecast energy consumption per 30-minute interval ($\text{kWh}$), which is proportional to average active power over the half-hour interval ($P_{\text{avg}} = \frac{\text{kWh}}{0.5\text{ h}} = 2 \times \text{kWh}$ in $\text{kW}$). In the \textbf{PJM dataset}, we forecast hourly aggregate active power demand directly in Megawatts ($\text{MW}$).
+\end{qnabox}
+
+\begin{qnabox}[Q5: Why is household smart-meter load significantly more volatile than substation load?]
+\textbf{Answer:} Due to the \textbf{diversity factor} and \textbf{aggregation effect}. At the regional transmission level (PJM), millions of individual consumer demands aggregate together; non-coincident peak demands cancel out stochastic variations according to the Central Limit Theorem. At the single household level (SGSC), individual appliance switching (e.g., $3.5\text{ kW}$ HVAC inrush, water heaters, EV charging) causes sudden step-changes in load with high variance.
+\end{qnabox}
+
+\begin{qnabox}[Q6: What is the ``Duck Curve'', and how does your model handle it?]
+\textbf{Answer:} The Duck Curve represents the deep midday trough in net load caused by high distributed solar PV generation, followed by a steep evening ramp when solar generation drops just as residential consumption surges. Our feature engineering captures this by transforming timestamps into continuous cyclical $\sin$ and $\cos$ encodings, enabling the model to learn diurnal solar-load ramp transitions.
+\end{qnabox}
+
+\begin{qnabox}[Q7: What physical systems do the SGSC and PJM datasets represent?]
+\textbf{Answer:} 
+\begin{itemize}[leftmargin=12pt,itemsep=1pt]
+    \item \textbf{SGSC (Smart Grid Smart City, Australia):} Low-voltage ($230\text{ V}$) residential distribution network smart meter readings at 30-minute intervals. Reflects consumer-level demand dynamics.
+    \item \textbf{PJM Interconnection (USA):} Bulk high-voltage transmission grid ($138\text{ kV}$ to $765\text{ kV}$) across 13 eastern US states. Reflects regional aggregated grid demand.
+\end{itemize}
+\end{qnabox}
+
+\begin{qnabox}[Q8: Why are MAPE and RMSE preferred over MSE in power systems?]
+\textbf{Answer:} 
+\begin{itemize}[leftmargin=12pt,itemsep=1pt]
+    \item \textbf{MAPE (\%):} Being dimensionless, it allows grid engineers to benchmark performance across different feeders and regional substations of varying base load sizes.
+    \item \textbf{RMSE (kW/MW):} Penalizes large error outliers quadratically. In power systems, a single large forecast error during peak load creates severe reserve shortfalls, whereas small steady-state errors are easily managed by governor action.
+\end{itemize}
+\end{qnabox}
+
+\begin{qnabox}[Q9: Why use Min-Max normalization instead of Standard (Z-score) scaling?]
+\textbf{Answer:} Electrical load has a strict physical lower boundary at zero ($\ge 0\text{ kW}$). Standard scaling produces negative normalized values that have no physical meaning for consumption and can disrupt ReLU/sigmoid activations. Min-Max normalization bounds inputs within $[0, 1]$, preventing exploding gradients during recurrent backpropagation.
+\end{qnabox}
+
+\begin{qnabox}[Q10: 30-Second Summary Statement of Electrical Engineering Value]
+\textbf{Core Statement:} ``Sir/Madam, from an electrical engineering perspective, this project is not merely an algorithmic exercise. We are developing an automated Short-Term Load Forecasting tool that enables smart grid operators to optimize Day-Ahead Unit Commitment and minimize spinning reserve margins. By reducing peak forecasting error on volatile distribution networks, our model prevents frequency instability, reduces expensive fossil peaker generation, and directly supports the seamless integration of renewable energy under SDG 7.''
+\end{qnabox}
+
+\end{document}

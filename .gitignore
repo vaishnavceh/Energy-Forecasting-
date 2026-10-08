@@ -5,6 +5,13 @@ data/preprocessed/
 *.parquet
 *.paruqet
 
+# Model checkpoints and outputs
+*.pt
+*.pth
+*.bin
+models/
+results/
+
 # Python
 __pycache__/
 *.py[cod]
